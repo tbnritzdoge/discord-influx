@@ -15,4 +15,8 @@ module.exports = class Client extends Socket {
             }
         })
     }
+    async connect(opts) {
+        super.connect(opts)
+        await this.start()
+    }
 }

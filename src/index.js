@@ -9,12 +9,13 @@ const client = new Client(process.env.TOKEN, {
             name: 'something cool',
             type: Constants.GatewayActivityTypes.WATCHING,
         },
-        status: 'dnd',
+        status: Constants.GatewayPresenceStatuses.DND,
     },
 });
 
-client.on('ready', async () => {
-    await client.start()
+client.on('ready', () => {
     console.log(`ready`)
 });
-client.connect('wss://gateway.discord.gg/');
+(async () => {
+    await client.connect('wss://gateway.discord.gg/');
+})()
