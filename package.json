@@ -1,0 +1,25 @@
+{
+  "name": "discord-influx",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tbnritzdoge/discord-influx.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tbnritzdoge/discord-influx/issues"
+  },
+  "homepage": "https://github.com/tbnritzdoge/discord-influx#readme",
+  "dependencies": {
+    "@influxdata/influxdb-client": "^1.6.0",
+    "detritus-client-socket": "^0.6.1",
+    "dotenv": "^8.2.0"
+  }
+}
