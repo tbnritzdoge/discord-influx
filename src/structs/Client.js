@@ -9,9 +9,8 @@ module.exports = class Client extends Socket {
         super(...args);
         this.events = new EventEmitter();
         this.logger = new Logger()
-        this.influx = new InfluxClient(this, {
-            host: process.env.INFLUX_URL,
-            database: 'boop',
+        this.influx = new InfluxClient(this, `https://influx.helper.wtf`, {
+            database: 'default',
             schema: [
               {
                 measurement: 'members',
@@ -33,6 +32,7 @@ module.exports = class Client extends Socket {
     }
     async start() {
         await this.handler.start()
+        await this.influx.start()
         this.on('packet', (packet) => {
             if (this.handler.events.map(g => g.name.split(':')[1]).includes(packet.t)) {
                 this.events.emit(packet.t, packet.d)

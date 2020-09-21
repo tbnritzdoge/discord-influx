@@ -6,10 +6,10 @@ module.exports = class InfluxClient extends EventEmitter {
         this.client = client;
         this.influx = new Influx(...args)
     }
-    start() {
+    async start() {
         this.influx.getDatabaseNames().then(names => {
-            if (!names.includes(process.env.INFLUX_DATABASE)) influx.createDatabase(process.env.INFLUX_DATABASE)
-          })
+            if (!names.includes(process.env.INFLUX_DATABASE)) this.influx.createDatabase(process.env.INFLUX_DATABASE)
+        })
     }
     writeBotEvent(eventName, tags) {
         this.client.logger.debug(`Writing event ${eventName} ${JSON.stringify(tags)}`)
@@ -17,6 +17,6 @@ module.exports = class InfluxClient extends EventEmitter {
             measurement: 'events',
             tags: { event_type: eventName, ...tags },
             fields: { count: 1 }
-        }]).catch(error => { this.client.logger.error(error) })
+        }], { database: process.env.INFLUX_DATABASE}).catch(error => { this.client.logger.error(error) })
     }
 }
