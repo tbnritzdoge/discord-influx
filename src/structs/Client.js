@@ -3,13 +3,21 @@ const { EventEmitter } = require(`events`)
 const Logger = require('./logger')
 const InfluxClient = require('./InfluxClient')
 const Influx = require('influx')
+const Collection = require('./bases/Collection')
 const Handler = require('./Handler')
+const { REST } = require(`@klasa/rest`)
 module.exports = class Client extends Socket {
     constructor(...args) {
         super(...args);
         this.events = new EventEmitter();
         this.logger = new Logger()
-        this.guilds = []
+        this.rest = new REST({
+            userAgentAppendix: `Boop 1.0`
+        })
+        this.cache = {
+            guilds: new Collection(),
+            channels: new Collection()
+        }
         this.influx = new InfluxClient(this, `https://influx.helper.wtf`, {
             database: 'default',
             schema: [
@@ -47,6 +55,7 @@ module.exports = class Client extends Socket {
     }
     async connect(opts) {
         super.connect(opts)
+        this.rest.token = process.env.TOKEN
         await this.start()
     }
 }

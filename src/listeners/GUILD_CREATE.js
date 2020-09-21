@@ -5,7 +5,10 @@ module.exports = class extends Event {
     }
 
     async run(message) {
-        await this.client.guilds.push(message.id)
+        await this.client.cache.guilds.set(message.id, message)
+        for(const channel of message.channels) {
+            await this.client.cache.channels.set(channel.id, channel)
+        }
         await this.client.influx.writeMemberCount(message.id, message.member_count)
     }
 }

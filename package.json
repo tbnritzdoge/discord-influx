@@ -20,6 +20,7 @@
   "dependencies": {
     "@aero/centra": "^1.0.6",
     "@influxdata/influxdb-client": "^1.6.0",
+    "@klasa/rest": "^0.5.4",
     "detritus-client-socket": "^0.6.1",
     "dotenv": "^8.2.0",
     "influx": "^5.6.3"
