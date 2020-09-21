@@ -2,8 +2,8 @@ const { Gateway: { Socket } } = require('detritus-client-socket');
 const { EventEmitter } = require(`events`)
 const Handler = require('./Handler')
 module.exports = class Client extends Socket {
-    constructor(options) {
-        super(options);
+    constructor(...args) {
+        super(...args);
         this.events = new EventEmitter();
         this.handler = new Handler(this)
     }

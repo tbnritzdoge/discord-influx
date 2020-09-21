@@ -10,7 +10,7 @@ const client = new Client(process.env.TOKEN, {
             type: Constants.GatewayActivityTypes.WATCHING,
         },
         status: Constants.GatewayPresenceStatuses.DND,
-    },
+    }
 });
 
 client.on('ready', () => {
