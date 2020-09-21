@@ -1,12 +1,34 @@
 const { Gateway: { Socket } } = require('detritus-client-socket');
 const { EventEmitter } = require(`events`)
 const Logger = require('./logger')
+const InfluxClient = require('./InfluxClient')
+const Influx = require('influx')
 const Handler = require('./Handler')
 module.exports = class Client extends Socket {
     constructor(...args) {
         super(...args);
         this.events = new EventEmitter();
         this.logger = new Logger()
+        this.influx = new InfluxClient(this, {
+            host: process.env.INFLUX_URL,
+            database: 'boop',
+            schema: [
+              {
+                measurement: 'members',
+                fields: {
+                  member_count: Influx.FieldType.INTEGER
+                },
+                tags: ['guild_id']
+              },
+              {
+                measurement: 'events',
+                fields: {
+                  count: Influx.FieldType.INTEGER
+                },
+                tags: ['event_type', 'channel_id', 'guild_id', 'user_id']
+              }
+            ]
+          })
         this.handler = new Handler(this)
     }
     async start() {

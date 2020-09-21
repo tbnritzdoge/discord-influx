@@ -6,7 +6,7 @@ class presenceUpdate extends Event {
     }
 
     async run(message) {
-        this.client.logger.debug(message)
+        this.client.logger.debug(JSON.stringify(message))
     }
 }
 

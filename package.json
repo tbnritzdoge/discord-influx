@@ -20,6 +20,7 @@
   "dependencies": {
     "@influxdata/influxdb-client": "^1.6.0",
     "detritus-client-socket": "^0.6.1",
-    "dotenv": "^8.2.0"
+    "dotenv": "^8.2.0",
+    "influx": "^5.6.3"
   }
 }
