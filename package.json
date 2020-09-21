@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/tbnritzdoge/discord-influx#readme",
   "dependencies": {
+    "@aero/centra": "^1.0.6",
     "@influxdata/influxdb-client": "^1.6.0",
     "detritus-client-socket": "^0.6.1",
     "dotenv": "^8.2.0",

@@ -10,10 +10,7 @@ class Handler {
 
     registerEvent(event) {
         if (typeof event === 'function') event = new event(this.client);
-
         this.events.set(event.name, event);
-
-
         switch (event.name.split(`:`)[0]) {
             case 'gateway': {
                 this.client.events.on(

@@ -9,25 +9,26 @@ module.exports = class Client extends Socket {
         super(...args);
         this.events = new EventEmitter();
         this.logger = new Logger()
+        this.guilds = []
         this.influx = new InfluxClient(this, `https://influx.helper.wtf`, {
             database: 'default',
             schema: [
-              {
-                measurement: 'members',
-                fields: {
-                  member_count: Influx.FieldType.INTEGER
+                {
+                    measurement: 'members',
+                    fields: {
+                        member_count: Influx.FieldType.INTEGER
+                    },
+                    tags: ['guild_id']
                 },
-                tags: ['guild_id']
-              },
-              {
-                measurement: 'events',
-                fields: {
-                  count: Influx.FieldType.INTEGER
-                },
-                tags: ['event_type', 'channel_id', 'guild_id', 'user_id']
-              }
+                {
+                    measurement: 'events',
+                    fields: {
+                        count: Influx.FieldType.INTEGER
+                    },
+                    tags: ['event_type', 'channel_id', 'guild_id', 'user_id']
+                }
             ]
-          })
+        })
         this.handler = new Handler(this)
     }
     async start() {
@@ -38,6 +39,11 @@ module.exports = class Client extends Socket {
                 this.events.emit(packet.t, packet.d)
             }
         })
+        this.interval = setInterval(async () => {
+            for (const id of this.guilds.values()) {
+                await this.influx.writeMemberCount(id)
+            }
+        }, 1800000);
     }
     async connect(opts) {
         super.connect(opts)

@@ -10,5 +10,6 @@ module.exports = class extends Event {
             guild_id: message.guild_id,
             user_id: message.user.id
         })
+        await this.client.influx.writeMemberCount(message.guild_id)
     }
 }
