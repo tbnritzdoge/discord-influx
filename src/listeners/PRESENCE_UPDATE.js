@@ -6,7 +6,7 @@ class presenceUpdate extends Event {
     }
 
     async run(message) {
-        console.log(message)
+        this.client.logger.debug(message)
     }
 }
 

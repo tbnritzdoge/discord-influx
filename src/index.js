@@ -14,7 +14,7 @@ const client = new Client(process.env.TOKEN, {
 });
 
 client.on('ready', () => {
-    console.log(`ready`)
+    client.logger.log(`ready`)
 });
 (async () => {
     await client.connect('wss://gateway.discord.gg/');
